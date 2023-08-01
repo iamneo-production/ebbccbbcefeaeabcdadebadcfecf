@@ -1,0 +1,45 @@
+<div class="container-fluid">
+    <h1>FormValidation</h1>
+    <form #userForm="ngForm" (ngSubmit)="submit()">
+      <hr />
+      <div class="form-group">
+        <label for="">Firstname</label>
+        <input type="text" id="inputFirstname"  (keyup)="checkname(name.value)" class="form-control " required #name="ngModel" [(ngModel)]="userModel.name" name="name"
+          [class.is-invalid]="name.invalid && !namecheck">
+        <small id=errorFirstName class="text-danger"[class.d-none]="name.valid || name.untouched || !namecheck">Name is required</small>
+        <small id=errorFirstName class="text-danger"[class.d-none]="namecheck || name.untouched">Firstname must be Not Null, Min Len - 3, Max Len - 50, Only Alphabets, no special chars, no numerical</small>
+      </div><br>
+      <div class="mb-3">
+        <label>Gender</label>
+        <div class="form-check">
+          <input type="radio" id="gender" class="form-check-input" name="gender" value="male" [(ngModel)]="userModel.gender" required #gender="ngModel" [class.is-invalid]="gender.invalid && gender.touched">
+          <label class="form-check-label">Male</label>
+        </div>
+        <div class="form-check">
+          <input type="radio" id="gender"  class="form-check-input" name="gender" value="female" [(ngModel)]="userModel.gender" required #gender="ngModel" [class.is-invalid]="gender.invalid && gender.touched">
+          <label class="form-check-label">Female</label>
+        </div>
+      </div>
+      <small id="errorGender" class="text-danger" [class.d-none]="gender.valid || gender.untouched">Gender is required</small>
+      <br>
+      <div class="form-group">
+        <select  id="country" (blur)="validateTopic(topic.value)" (change)="validateTopic(topic.value)" (change)="checkage(topic.value)" (blur)="checkage(topic.value)" class="form-select" #topic="ngModel" [(ngModel)]="userModel.country" name="country" [class.is-invalid]="topicHasError && topic.touched"  >
+          <option value="default">Country</option>
+          <option *ngFor="let c of country" >{{c}}</option>
+        </select>
+        <small id="errorCountry" class="text-danger" [class.d-none]="!topicHasError || topic.untouched">Please select the Country</small>
+      </div><br>
+      <div class="form-group">
+        <label for="" class="text">City</label>
+        <input id="city" type="text" value="" class="form-control" name="city" #city="ngModel" [ngModel]="userModel.city" required [class.is-invalid]="city.touched && city.invalid" >
+        <small id="errorCity" class="text-danger"[class.d-none]="city.valid || city.untouched">City is required</small>
+  
+      </div><br>
+      <div class="form-group">
+        <label for="" class="text">Age</label>
+        <input id="inputAge" type="number" value="" class="form-control" name="age" #age="ngModel" [ngModel]="userModel.age" [required]="agecheck" [class.is-invalid]="agecheck && age.invalid">
+            <small id="errorAge" class="text-danger"[class.d-none]="!agecheck || age.valid">Age is required</small>
+      </div><br>
+      <button id="submit" class="btn btn-primary" [disabled]="userForm.form.invalid" type="submit">Submit</button>
+    </form>
+  </div>
